@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<script>
+			var txt,tbl,
+				listR = ["-","+","=","*","/","%","++","--","==","!=",">","<",">=","<=","&&","||","^","!","&","|","^","~",">>",">>>","<<","(",")"];
+
+			
+			function cekSyntax(){
+				var s = txt.value;
+				var sLen = s.length;
+				var error = false;
+				
+				if(s)
+				{
+					var r = [],
+						d = [],
+						n,
+						t;
+					for(var i = 0; i < sLen; i++)
+					{
+						t = s[i];
+						if(t === ' ') continue;
+						var j = i + 1;
+						if(listR.indexOf(s[i]) !== -1)
+						{
+							for(var j = i + 1;listR.indexOf(s[j]) !== -1; j++)
+							{
+								t += s[j];
+							}
+							i += t.length - 1;
+							if(listR.indexOf(t) !== -1)
+							{
+								if (r.indexOf(t) === -1)
+									r.push(t);
+							}
+							else 
+							{
+								error = true;
+								alert('error');
+							}
+							console.log(r);
+						}
+						else if(s[i] !== ' ')
+						{
+							for(var j = i + 1; s[j] && s[j] !== ' ' && listR.indexOf(s[j]) === -1;j++)
+							{
+								t += s[j];
+							}
+							i += t.length -1;
+							//console.log(t)
+							
+							if(d.indexOf(t) === -1)
+								d.push(t);
+							
+							console.log(d);
+						}
+					}
+					if (!error)
+					for(var n = 0; n < (r.length >= d.length ? r.length : d.length); n++){
+						var newRow = document.createElement("tr");
+						var rTd = document.createElement("td");
+						var dTd = document.createElement("td");
+						rTd.textContent = r[n]?r[n]:"";
+						dTd.textContent = d[n]?d[n]:"";
+						newRow.appendChild(rTd);
+						newRow.appendChild(dTd);
+						document.querySelectorAll("#tbl")[0].appendChild(newRow);
+						document.querySelectorAll("#tblOutput")[0].setAttribute("style", "display");
+					}					
+				}
+			}
+			
+			function emptyTable()
+			{
+				var listRow = document.querySelectorAll("#tbl tr");
+				for(var i =listRow.length-1;i>=0;i--)
+				{
+					listRow[i].remove();
+				}
+				document.querySelectorAll("#tblOutput")[0].setAttribute("style", "display:none");
+			}
+			
+			function go(e)
+			{
+				emptyTable();
+				cekSyntax();
+			}
+			
+			window.onload = function(){
+				txt = document.getElementById("txtInput");
+				tbl = document.getElementById("tblOutput");
+				txt.onkeydown = function(e){
+					if(e.which == 13)
+					{
+						go();
+					}
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div align="center">
+			<h1>Operator dan Operand dalam bahasa Java</h1>
+			<div>
+				<input type="text" id="txtInput" />
+				<input type="button" value="Go!" onclick="go()" />
+				<br />
+				<span style="color: #FF0000">NB: Pisahkan operator dengan 'spasi' (' ')</span>
+			</div>
+			<table border = "1" id="tblOutput" style="display:none;" >
+				<thead>
+					<tr>
+						<th>Operator</th>
+						<th>Operand</th>
+					</tr>
+				</thead>
+				<tbody id="tbl">
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>
