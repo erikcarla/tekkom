@@ -1,4 +1,4 @@
-var checkoperandtable = true;
+var checkoperandtable = true,operator = [],operand = [];
 $(document).ready(function(){
 	//view
 	$('#next').click(function(){
@@ -20,10 +20,10 @@ $(document).ready(function(){
 		else if($(sv).hasClass('iStatement')){
 			checkoperandtable = true;
 			checkStatement();
-			if(checkoperandtable == false){
-				alert('Operand tersebut belum terdaftar di dalam table');
-			}
-			else{
+			// if(checkoperandtable == false){
+				// alert('Operand tersebut belum terdaftar di dalam table');
+			// }
+			// else{
 				$('#iStatement').css('display','none');
 				$('#iTree').css('display','');
 				
@@ -31,7 +31,7 @@ $(document).ready(function(){
 				$('#next').removeClass('iStatement').addClass('iTree');
 				
 				statement();
-			}
+			// }
 		}
 	});
 	$('#back').click(function(){
@@ -88,17 +88,49 @@ $(document).ready(function(){
 
 //statement
 function statement(){
-	txt = $('#statement').val();
-	var txt,tbl,
-		listR = ["=","*","/","+","-"];
+	var s = $('#statement').val();
+	var tempsequence =[],token =[], datatype =[],
+		sequence = ["(",")","^","%","*","/","+","-","="];
+	var sLen = s.length;
+	//token
+	for(var i = 0 ; i < operand.length ; i++){
+		if($.isNumeric(operand[i]))
+			token.push(operand[i]);
+		else{
+			var tr = $('#table-manager tbody tr').first();
+			while($(tr).length !== 0)
+			{
+				if($('.lexeme',tr).val() == operand[i]){
+					token.push('<id,'+ $('.lexeme-id',tr).text()+'>');
+					datatype.push($('.dataType',tr).text());
+					break;
+				}
+				tr = $(tr).next();
+			}
+		}
+	}
+	//want to get token? print token.. want to get datatype? print datatype
+	
+	
+	var i = 3;
+	for(var j = 0 ; j < operator.length ; j++){
+		if(sequence[i] == operator[j]){
+			if(j!=0) 
+				tempsequence.push({parent:null,left:op,mid:,right:});
+			else
+				tempsequence.push({parent:null,left:operand[0],mid:null,right:});
+		}
+	}
 }
 
 //check statement
 function checkStatement(){
 	var s = $('#statement').val();
-	var operator = [],operand = [],t,n,
-		listR = ["=","*","/","+","-"];
+	var t,n,tempop =[],
+		listR = ["(",")","^","%","*","/","+","-","="];
 	var sLen = s.length;
+	operand = [];
+	operator = [];
 	if(s)
 	{	
 		for(var i = 0; i < sLen; i++)
@@ -130,7 +162,8 @@ function checkStatement(){
 					t += s[j];
 				}
 				i += t.length -1;
-				
+				if (operand.indexOf(t) === -1 /*&& $.isNumeric(operand)*/)
+					tempop.push(t);
 				operand.push(t);
 				
 			}
@@ -139,25 +172,18 @@ function checkStatement(){
 	
 	var tr = $('#table-manager tbody tr');
 	var checkoperand = 0;
-	for(var i = 0 ; i < operand.length ; i++){
-		if (operand.indexOf(i) === -1)
-			continue;
-		else{
-			while($(tr).length !== 0)
-			{
-				if($('.lexeme',tr).val() == operand[i]){
-					checkoperand++;
-					break;
-				}
-				tr = $(tr).next();
+	for(var i = 0 ; i < tempop.length ; i++){
+		while($(tr).length !== 0)
+		{
+			if($('.lexeme',tr).val() == tempop[i]){
+				checkoperand++;
+				break;
 			}
+			tr = $(tr).next();
 		}
 	}
-	console.log(operand);
-	console.log(operator);
 	
-	if(checkoperand != operand.length)
+	if(checkoperand != tempop.length)
 		checkoperandtable = false;
 		
-	
 }
