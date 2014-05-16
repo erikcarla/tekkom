@@ -5,10 +5,24 @@ $(document).ready(function(){
 		var sv=this;
 		if($(sv).hasClass('index')){
 			$('#index').css('display','none');
+			$('#iType').css('display','');
+			
+			$('#back').css('display','').removeClass('index').addClass('iType');
+			$('#next').removeClass('index').addClass('iType');
+		}
+		else if($(sv).hasClass('iType')){
+			$('#iType').css('display','none');
+			$('#iToken').css('display','');
+			
+			$('#back').removeClass('iType').addClass('iToken');
+			$('#next').removeClass('iType').addClass('iToken');
+		}
+		else if($(sv).hasClass('iToken')){
+			$('#iToken').css('display','none');
 			$('#iTableManager').css('display','');
 			
-			$('#back').css('display','').removeClass('index').addClass('iTableManager');
-			$('#next').removeClass('index').addClass('iTableManager');
+			$('#back').removeClass('iToken').addClass('iTableManager');
+			$('#next').removeClass('iToken').addClass('iTableManager');
 		}
 		else if($(sv).hasClass('iTableManager')){
 			$('#iTableManager').css('display','none');
@@ -36,12 +50,26 @@ $(document).ready(function(){
 	});
 	$('#back').click(function(){
 		var sv=this;
-		if($(sv).hasClass('iTableManager')){
+		if($(sv).hasClass('iType')){
 			$('#index').css('display','');
+			$('#iType').css('display','none');
+			
+			$('#back').css('display','none').removeClass('iType').addClass('index');
+			$('#next').removeClass('iType').addClass('index');
+		}
+		else if($(sv).hasClass('iToken')){
+			$('#iType').css('display','');
+			$('#iToken').css('display','none');
+			
+			$('#back').removeClass('iToken').addClass('iType');
+			$('#next').removeClass('iToken').addClass('iType');
+		}
+		else if($(sv).hasClass('iTableManager')){
+			$('#iToken').css('display','');
 			$('#iTableManager').css('display','none');
 			
-			$('#back').css('display','none').removeClass('iTableManager').addClass('index');
-			$('#next').removeClass('iTableManager').addClass('index');
+			$('#back').removeClass('iTableManager').addClass('iToken');
+			$('#next').removeClass('iTableManager').addClass('iToken');
 		}
 		else if($(sv).hasClass('iStatement')){
 			$('#iStatement').css('display','none');
@@ -59,16 +87,29 @@ $(document).ready(function(){
 		}
 	});
 	
+	//type checking
+	var temptype={
+		value: ["int","float"],
+		desc: ["Integer","Float"]
+	};
+	
+	var content="";
+	content='<select class="form-control dataType">';
+		for(var j = 0 ; j < temptype.value.length ; j++)
+			content+='<option value="'+temptype.value[j]+'">'+temptype.desc[j]+'</option>';
+	content+='</select>';
+	$('#iType .row').append(content);
+	
 	//table manager
 	var tempdatatype={
-		value: ["int","float","token","token","token"],
-		desc: ["Integer","Float","Varchar","Char","Boolean"]
+		value: ["int","float","token","token"],
+		desc: ["Integer","Float","Char","Boolean"]
 	};
 	var content="";
 	for(var i = 1 ; i < 3 ; i++){
 		content='<tr><td><span class="lexeme-id">'+i
 			+'</span></td><td><input type="text" class="form-control lexeme"/></td><td><select class="form-control dataType">';
-			for(var j = 0 ; j < 4 ; j++)
+			for(var j = 0 ; j < tempdatatype.value.length ; j++)
 				content+='<option value="'+tempdatatype.value[j]+'">'+tempdatatype.desc[j]+'</option>';
 		content+='</select></td></tr>';
 		$('#table-manager').append(content);
@@ -89,8 +130,8 @@ $(document).ready(function(){
 //statement
 function statement(){
 	var s = $('#statement').val();
-	var tempsequence =[],token =[], datatype =[],
-		sequence = ["(",")","^","%","*","/","+","-","="];
+	var tempsequenceoperator =[],tempsequenceoperand =[],token =[], datatype =[],
+		sequence = ["^","%","*","/","+","-","="];
 	var sLen = s.length;
 	//token
 	for(var i = 0 ; i < operand.length ; i++){
@@ -101,7 +142,7 @@ function statement(){
 			while($(tr).length !== 0)
 			{
 				if($('.lexeme',tr).val() == operand[i]){
-					token.push('<id,'+ $('.lexeme-id',tr).text()+'>');
+					token.push('<'+ $('#iTokenText').val()+','+ $('.lexeme-id',tr).text()+'>');
 					datatype.push($('.dataType',tr).text());
 					break;
 				}
@@ -111,16 +152,38 @@ function statement(){
 	}
 	//want to get token? print token.. want to get datatype? print datatype
 	
+	// for(var j = token.length-1 ; j > 0 ; j--){
+		// if(sequence[0] == operator[j]){
+			// for(var k = j ; k< token.length ; k++){
+				// var tempangka = 1;
+				// if(sequence[1] == operator[k]){
+					// tempsequenceoperator.push(operator[k]);
+					// tempsequenceoperand.push(token[k]);
+					// tempsequenceoperand.push(token[k+1]);
+				// }
+			// }			
+		// }
 	
-	var i = 3;
-	for(var j = 0 ; j < operator.length ; j++){
-		if(sequence[i] == operator[j]){
-			if(j!=0) 
-				tempsequence.push({parent:null,left:op,mid:,right:});
-			else
-				tempsequence.push({parent:null,left:operand[0],mid:null,right:});
+	console.log(operator);
+	console.log(token);
+	
+	for(var j = token.length-1 ; j > 0 ; j--){
+		if(sequence[x] == operator[j]){
+			
 		}
 	}
+	
+	console.log(tempsequenceoperator);
+	console.log(tempsequenceoperand);
+	// var i = 3;
+	// for(var j = 0 ; j < operator.length ; j++){
+		// if(sequence[i] == operator[j]){
+			// if(j!=0) 
+				// tempsequence.push({parent:null,left:op,right:});
+			// else
+				// tempsequence.push({parent:null,left:operand[0],right:});
+		// }
+	// }
 }
 
 //check statement
@@ -140,19 +203,11 @@ function checkStatement(){
 			var j = i + 1;
 			if(listR.indexOf(s[i]) !== -1)
 			{
-				for(var j = i + 1;listR.indexOf(s[j]) !== -1; j++)
-				{
-					t += s[j];
-				}
+				
 				i += t.length - 1;
 				if(listR.indexOf(t) !== -1)
 				{
 					operator.push(t);
-				}
-				else 
-				{
-					error = true;
-					alert('error');
 				}
 			}
 			else if(s[i] !== ' ')
