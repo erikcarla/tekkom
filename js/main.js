@@ -130,7 +130,7 @@ $(document).ready(function(){
 //statement
 function statement(){
 	var s = $('#statement').val();
-	var tempsequenceoperator =[],tempsequenceoperand =[],token =[], datatype =[],
+	var tempseqoperator=[],tempseqtoken=[],token =[], datatype =[],
 		sequence = ["^","%","*","/","+","-","="];
 	var sLen = s.length;
 	//token
@@ -150,32 +150,57 @@ function statement(){
 			}
 		}
 	}
-	//want to get token? print token.. want to get datatype? print datatype
+	//want to get token? print token.. want to get datatype? print datatype	
 	
-	// for(var j = token.length-1 ; j > 0 ; j--){
-		// if(sequence[0] == operator[j]){
-			// for(var k = j ; k< token.length ; k++){
-				// var tempangka = 1;
-				// if(sequence[1] == operator[k]){
-					// tempsequenceoperator.push(operator[k]);
-					// tempsequenceoperand.push(token[k]);
-					// tempsequenceoperand.push(token[k+1]);
-				// }
-			// }			
-		// }
 	
-	console.log(operator);
-	console.log(token);
 	
-	for(var j = token.length-1 ; j > 0 ; j--){
-		if(sequence[x] == operator[j]){
-			
-		}
+	//penampungan ke sebuah object untuk dibuat tree
+	var state = {};
+	var x = 0;
+	
+	tempseqoperator = operator;
+	tempseqtoken = token;
+	for(var j = tempseqtoken.length-1 ; j >= 0 ; j--){
+		if(tempseqoperator[j] == '/' || tempseqoperator[j] == '*' || tempseqoperator[j] == '%'){
+			var tree = {'left':tempseqtoken[j],'right':tempseqtoken[j+1],'parent':tempseqoperator[j]};
+			state['obj'+x]=tree;
+			tempseqtoken.splice(j,2,'obj'+x);
+			tempseqoperator = $.grep(tempseqoperator, function(value) {
+				return value != tempseqoperator[j];
+			});
+			x++;
+			j = tempseqtoken.length -1;
+		}	
+	}
+	for(var j = tempseqtoken.length-1 ; j >= 0 ; j--){
+		if(tempseqoperator[j] == '+' || tempseqoperator[j] == '-'){
+			var tree = {'left':tempseqtoken[j],'right':tempseqtoken[j+1],'parent':tempseqoperator[j]};
+			state['obj'+x]=tree;
+			tempseqtoken.splice(j,2,'obj'+x);
+			tempseqoperator = $.grep(tempseqoperator, function(value) {
+				return value != tempseqoperator[j];
+			});
+			x++;
+			j = tempseqtoken.length-1;
+		}	
 	}
 	
-	console.log(tempsequenceoperator);
-	console.log(tempsequenceoperand);
-	// var i = 3;
+	for(var j = tempseqtoken.length-1 ; j >= 0 ; j--){
+		if(tempseqoperator[j] == '='){
+			var tree = {'left':tempseqtoken[j],'right':tempseqtoken[j+1],'parent':tempseqoperator[j]};
+			state['obj'+x]=tree;
+			tempseqtoken.splice(j,2,'obj'+x);
+			tempseqoperator = $.grep(tempseqoperator, function(value) {
+				return value != tempseqoperator[j];
+			});
+			x++;
+			j = tempseqtoken.length-1;
+		}	
+	}
+	
+	console.log(state);
+	
+	
 	// for(var j = 0 ; j < operator.length ; j++){
 		// if(sequence[i] == operator[j]){
 			// if(j!=0) 
