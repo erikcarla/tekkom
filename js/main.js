@@ -152,14 +152,12 @@ function statement(){
 	}
 	//want to get token? print token.. want to get datatype? print datatype	
 	
-	console.log(token);
-	console.log(operator);	
 	
 	//penampungan ke sebuah object untuk dibuat tree
 	var state = {};
 	var x = 0;
 	var kurung = 0;
-	var tempkurung = 0;
+	var temporar = 0;
 	
 	tempseqoperator = operator;
 	tempseqtoken = operand;
@@ -170,91 +168,87 @@ function statement(){
 		}
 	}
 	
-	console.log(kurung);
+	// for(var j = 0 ; j < tempseqoperator.length ; j++){
+		// if(tempseqoperator[j] == ')'){
+			// tempseqoperator.splice(j,1);
+			// for(var i = j-1 ; i >= 0 ; i--){
+				// if(tempseqoperator[i] == '('){
+					// tempseqoperator.splice(i,1);
+					// for(var k = i ; k < j-1 ; k++){		
+						// if(tempseqoperator[k] == '/' || tempseqoperator[k] == '*' || tempseqoperator[k] == '%'){
+							// var tree = {'left':tempseqtoken[k-kurung+1],'right':tempseqtoken[k-kurung+2],'parent':tempseqoperator[k]};
+							// state['obj'+x]=tree;
+							// tempseqtoken.splice(k-kurung+1,2,'obj'+x);
+							// tempseqoperator.splice(k,1);
+							// x++;
+							// k = i-1;
+							// j = j-1;
+						// }	
+					// }
+					// for(var k = i ; k < j-1 ; k++){		
+						// if(tempseqoperator[k] == '+' || tempseqoperator[k] == '-'){
+							// var tree = {'left':tempseqtoken[k-kurung+1],'right':tempseqtoken[k-kurung+2],'parent':tempseqoperator[k]};
+							// state['obj'+x]=tree;
+							// tempseqtoken.splice(k,2,'obj'+x);
+							// tempseqoperator.splice(k,1);
+							// x++;
+							// k = i-1;
+							// j = j-1;
+						// }	
+					// }
+					// for(var k = i ; k < j-1 ; k++){		
+						// if(tempseqoperator[k] == '='){
+							// var tree = {'left':tempseqtoken[k-kurung+1],'right':tempseqtoken[k-kurung+2],'parent':tempseqoperator[k]};
+							// state['obj'+x]=tree;
+							// tempseqtoken.splice(k,2,'obj'+x);
+							// tempseqoperator.splice(k,1);
+							// x++;
+							// k = i-1;
+							// j = j-1;
+						// }	
+					// }
+					// i = j;
+				// }
+			// }
+			// j = 0;
+		// }	
+	// }
 	
-	for(var j = 0 ; j < tempseqoperator.length ; j++){
-		if(tempseqoperator[j] == ')'){
+	
+	for(var j = 0 ; j < tempseqtoken.length ; j++){
+		if(tempseqoperator[j] == '/' || tempseqoperator[j] == '*' || tempseqoperator[j] == '%'){
+			var tree = {'left':tempseqtoken[j],'right':tempseqtoken[j+1],'parent':tempseqoperator[j]};
+			state['obj'+x]=tree;
+			tempseqtoken.splice(j,2,'obj'+x);
 			tempseqoperator.splice(j,1);
-			for(var i = j ; i >= 0 ; i--){
-				if(tempseqoperator[i] == '('){
-					tempseqoperator.splice(i,1);
-					for(var k = i ; k < j ; k++){
-						console.log(tempseqtoken);
-						if(tempseqoperator[k] == '/' || tempseqoperator[k] == '*' || tempseqoperator[k] == '%'){
-							tempkurung = k - kurung+1;
-							var tree = {'left':tempseqtoken[tempkurung],'right':tempseqtoken[tempkurung+1],'parent':tempseqoperator[k]};
-							state['obj'+x]=tree;
-							tempseqtoken.splice(tempkurung,2,'obj'+x);
-							tempseqoperator.splice(k,1);
-							x++;
-							k = i;
-						}	
-					}
-					for(var k = i ; k < j ; k++){
-						console.log(tempkurung);
-						if(tempseqoperator[k] == '+' || tempseqoperator[k] == '-'){
-							tempkurung = k - kurung +1;
-							var tree = {'left':tempseqtoken[tempkurung],'right':tempseqtoken[tempkurung+1],'parent':tempseqoperator[k]};
-							state['obj'+x]=tree;
-							tempseqtoken.splice(tempkurung,2,'obj'+x);
-							tempseqoperator.splice(k,1);
-							x++;
-							k = i;
-						}	
-					}
-					for(var k = i ; k < j ; k++){
-						console.log(tempseqtoken);
-						if(tempseqoperator[k] == '='){
-							tempkurung = k - kurung +1;
-							var tree = {'left':tempseqtoken[tempkurung],'right':tempseqtoken[tempkurung+1],'parent':tempseqoperator[k]};
-							state['obj'+x]=tree;
-							tempseqtoken.splice(tempkurung,2,'obj'+x);
-							tempseqoperator.splice(k,1);
-							x++;
-							k = i;
-						}	
-					}
-					i = j;
-				}
-			}
-			j = 0;
+			x++;
+			j = -1;
+		}	
+	}
+	for(var j = 0 ; j < tempseqtoken.length ; j++){
+		if(tempseqoperator[j] == '+' || tempseqoperator[j] == '-'){
+			var tree = {'left':tempseqtoken[j],'right':tempseqtoken[j+1],'parent':tempseqoperator[j]};
+			state['obj'+x]=tree;
+			tempseqtoken.splice(j,2,'obj'+x);
+			tempseqoperator.splice(j,1);
+			x++;
+			j = -1;
 		}	
 	}
 	
+	for(var j = 0 ; j < tempseqtoken.length ; j++){
+		if(tempseqoperator[j] == '='){
+			var tree = {'left':tempseqtoken[j],'right':tempseqtoken[j+1],'parent':tempseqoperator[j]};
+			state['obj'+x]=tree;
+			tempseqtoken.splice(j,2,'obj'+x);
+			tempseqoperator.splice(j,1);
+			x++;
+			j = -1;
+		}	
+	}
 	
-	// for(var j = 0 ; j < tempseqtoken.length ; j++){
-		// if(tempseqoperator[j] == '/' || tempseqoperator[j] == '*' || tempseqoperator[j] == '%'){
-			// var tree = {'left':tempseqtoken[j],'right':tempseqtoken[j+1],'parent':tempseqoperator[j]};
-			// state['obj'+x]=tree;
-			// tempseqtoken.splice(j,2,'obj'+x);
-			// tempseqoperator.splice(j,1);
-			// x++;
-			// j = 0;
-		// }	
-	// }
-	// for(var j = 0 ; j < tempseqtoken.length ; j++){
-		// if(tempseqoperator[j] == '+' || tempseqoperator[j] == '-'){
-			// var tree = {'left':tempseqtoken[j],'right':tempseqtoken[j+1],'parent':tempseqoperator[j]};
-			// state['obj'+x]=tree;
-			// tempseqtoken.splice(j,2,'obj'+x);
-			// tempseqoperator.splice(j,1);
-			// x++;
-			// j = 0;
-		// }	
-	// }
+	printtree('obj'+x);
 	
-	// for(var j = 0 ; j < tempseqtoken.length ; j++){
-		// if(tempseqoperator[j] == '='){
-			// var tree = {'left':tempseqtoken[j],'right':tempseqtoken[j+1],'parent':tempseqoperator[j]};
-			// state['obj'+x]=tree;
-			// tempseqtoken.splice(j,2,'obj'+x);
-			// tempseqoperator.splice(j,1);
-			// x++;
-			// j = 0;
-		// }	
-	// }
-	
-	console.log(state);
 }
 
 //check statement
@@ -312,4 +306,40 @@ function checkStatement(){
 	if(checkoperand != tempop.length)
 		checkoperandtable = false;
 		
+}
+
+
+//tree
+function printtree(obj){
+	console.log(obj);
+	// var text = '';
+	// for(var i = totalstate-1 ; i >= 0 ; i--){
+		// var checkobj = 'obj'+(i-1);
+		// text+='<ul>'
+			// text+='<li>';
+				// text+='<a href="#">'+state['obj'+i].parent+'</a>';
+				// text+='<ul>';
+					// if(state['obj'+i].left == checkobj){
+						
+					// }else{
+						// text+='<li>';
+							// text+='<a href="#">';
+								// text+=state['obj'+i].left;
+							// text+='</a>';
+						// text+='</li>';
+					// }
+					// if(state['obj'+i].right == checkobj){
+					
+					// }else{
+						// text+='<li>';
+							// text+='<a href="#">';
+								// text+=state['obj'+i].right;
+							// text+='</a>';
+						// text+='</li>';
+					// }
+				// text+='</ul>';
+			// text+='</li>';
+		// text+='</ul>';
+	// }
+	// $('.tree').append(text);
 }
