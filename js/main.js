@@ -40,6 +40,7 @@ $(document).ready(function(){
 			// else{
 				$('#iStatement').css('display','none');
 				$('#iTree').css('display','');
+				$('#Tree').css('display','');
 				
 				$('#back').removeClass('iStatement').addClass('iTree');
 				$('#next').removeClass('iStatement').addClass('iTree');
@@ -80,6 +81,7 @@ $(document).ready(function(){
 		}
 		else if($(sv).hasClass('iTree')){
 			$('#iTree').css('display','none');
+			$('#Tree').css('display','none');
 			$('#iStatement').css('display','');
 			
 			$('#back').removeClass('iTree').addClass('iStatement');
