@@ -1,14 +1,9 @@
-aa=bb*cc-60/aa+cc-dd-ff%ee
+aa=bb*cc-60/aa+cc-dd*ff%ee
 
 
-a+b*c-d/e
+a+b*c-d/e   
 
 
-a*b-(a+b+(c-d*a+b)+c)/e
+a*b-(a+b+(b-d*a+c)+c)/e
 
-
-
-a*b-(a+b+(c/d*a%b)+c)/e
-
- a*b-(c+b-(a+b+(c/d*a%b)+c))/e
-
+(b+d*a-c)

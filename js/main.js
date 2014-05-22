@@ -246,9 +246,69 @@ function statement(){
 			j = -1;
 		}	
 	}
+	$('.tree').empty();
 	
-	printtree('obj'+x);
+	var text = '';
+	text+='<ul>'
+		text+='<li>';
+			text+='<a href="#">'+state['obj'+(x-1)].parent+'</a>';
+			text+='<ul>';
+				text+='<li>';
+					if(state['obj'+(x-1)].left.indexOf('obj') == 0){
+						text+=printtree(state['obj'+(x-1)].left,state);
+					}else{
+						text+='<a href="#">';
+							text+=state['obj'+(x-1)].left;
+						text+='</a>';
+					}
+				text+='</li>';
+				text+='<li>';
+				if(state['obj'+(x-1)].right.indexOf('obj') == 0){
+					text+=printtree(state['obj'+(x-1)].right,state);
+				}else{
+					text+='<a href="#">';
+						text+=state['obj'+(x-1)].right;
+					text+='</a>';
+				}
+				text+='</li>';
+			text+='</ul>';
+		text+='</li>';
+	text+='</ul>';
+	$('.tree').append(text);
 	
+}
+
+
+//tree
+function printtree(obj,state){
+	var text = '';
+	console.log(state[obj].parent);
+	text+='<ul>'
+		text+='<li>';
+			text+='<a href="#">'+state[obj].parent+'</a>';
+			text+='<ul>';
+				text+='<li>';
+				if(state[obj].left.indexOf('obj') == 0){
+					text+=printtree(state[obj].left,state);
+				}else{
+					text+='<a href="#">';
+						text+=state[obj].left;
+					text+='</a>';
+				}
+				text+='</li>';
+				text+='<li>';
+				if(state[obj].right.indexOf('obj') == 0){
+					text+=printtree(state[obj].right,state);
+				}else{
+					text+='<a href="#">';
+						text+=state[obj].right;
+					text+='</a>';
+				}
+				text+='</li>';
+			text+='</ul>';
+		text+='</li>';
+	text+='</ul>';
+	return text;
 }
 
 //check statement
@@ -309,37 +369,3 @@ function checkStatement(){
 }
 
 
-//tree
-function printtree(obj){
-	console.log(obj);
-	// var text = '';
-	// for(var i = totalstate-1 ; i >= 0 ; i--){
-		// var checkobj = 'obj'+(i-1);
-		// text+='<ul>'
-			// text+='<li>';
-				// text+='<a href="#">'+state['obj'+i].parent+'</a>';
-				// text+='<ul>';
-					// if(state['obj'+i].left == checkobj){
-						
-					// }else{
-						// text+='<li>';
-							// text+='<a href="#">';
-								// text+=state['obj'+i].left;
-							// text+='</a>';
-						// text+='</li>';
-					// }
-					// if(state['obj'+i].right == checkobj){
-					
-					// }else{
-						// text+='<li>';
-							// text+='<a href="#">';
-								// text+=state['obj'+i].right;
-							// text+='</a>';
-						// text+='</li>';
-					// }
-				// text+='</ul>';
-			// text+='</li>';
-		// text+='</ul>';
-	// }
-	// $('.tree').append(text);
-}
