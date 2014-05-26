@@ -40,7 +40,6 @@ $(document).ready(function(){
 			// else{
 				$('#iStatement').css('display','none');
 				$('#iTree').css('display','');
-				$('#Tree').css('display','');
 				
 				$('#back').removeClass('iStatement').addClass('iTree');
 				$('#next').removeClass('iStatement').addClass('iTree');
@@ -81,7 +80,6 @@ $(document).ready(function(){
 		}
 		else if($(sv).hasClass('iTree')){
 			$('#iTree').css('display','none');
-			$('#Tree').css('display','none');
 			$('#iStatement').css('display','');
 			
 			$('#back').removeClass('iTree').addClass('iStatement');
@@ -278,36 +276,32 @@ function statement(){
 	text+='</ul>';
 	$('.tree').append(text);
 	
+	$('.tree').css('width',$('.tree ul').length * 75 - $('.tree ul').length * 20);
 }
 
 
 //tree
 function printtree(obj,state){
 	var text = '';
-	console.log(state[obj].parent);
-	text+='<ul>'
+	text+='<a href="#">'+state[obj].parent+'</a>';
+	text+='<ul>';
 		text+='<li>';
-			text+='<a href="#">'+state[obj].parent+'</a>';
-			text+='<ul>';
-				text+='<li>';
-				if(state[obj].left.indexOf('obj') == 0){
-					text+=printtree(state[obj].left,state);
-				}else{
-					text+='<a href="#">';
-						text+=state[obj].left;
-					text+='</a>';
-				}
-				text+='</li>';
-				text+='<li>';
-				if(state[obj].right.indexOf('obj') == 0){
-					text+=printtree(state[obj].right,state);
-				}else{
-					text+='<a href="#">';
-						text+=state[obj].right;
-					text+='</a>';
-				}
-				text+='</li>';
-			text+='</ul>';
+		if(state[obj].left.indexOf('obj') == 0){
+			text+=printtree(state[obj].left,state);
+		}else{
+			text+='<a href="#">';
+				text+=state[obj].left;
+			text+='</a>';
+		}
+		text+='</li>';
+		text+='<li>';
+		if(state[obj].right.indexOf('obj') == 0){
+			text+=printtree(state[obj].right,state);
+		}else{
+			text+='<a href="#">';
+				text+=state[obj].right;
+			text+='</a>';
+		}
 		text+='</li>';
 	text+='</ul>';
 	return text;
