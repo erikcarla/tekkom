@@ -142,7 +142,7 @@ function statement(){
 			while($(tr).length !== 0)
 			{
 				if($('.lexeme',tr).val() == operand[i]){
-					token.push('<'+ $('#iTokenText').val()+','+ $('.lexeme-id',tr).text()+'>');
+					token.push('&lt;'+ $('#iTokenText').val()+','+ $('.lexeme-id',tr).text()+'&gt;');
 					datatype.push($('.dataType',tr).text());
 					break;
 				}
@@ -160,7 +160,7 @@ function statement(){
 	var temporar = 0;
 	
 	tempseqoperator = operator;
-	tempseqtoken = operand;
+	tempseqtoken = token;
 	
 	for(var j = 0 ; j < tempseqoperator.length ; j++){
 		if(tempseqoperator[j] == '('){
@@ -251,14 +251,14 @@ function statement(){
 	var text = '';
 	text+='<ul>'
 		text+='<li>';
-			text+='<a href="#">'+state['obj'+(x-1)].parent+'</a>';
+			text+='<a href="#">'+state['obj'+(x-1)].parent.toString()+'</a>';
 			text+='<ul>';
 				text+='<li>';
 					if(state['obj'+(x-1)].left.indexOf('obj') == 0){
 						text+=printtree(state['obj'+(x-1)].left,state);
 					}else{
 						text+='<a href="#">';
-							text+=state['obj'+(x-1)].left;
+							text+=state['obj'+(x-1)].left.toString();
 						text+='</a>';
 					}
 				text+='</li>';
@@ -267,7 +267,7 @@ function statement(){
 					text+=printtree(state['obj'+(x-1)].right,state);
 				}else{
 					text+='<a href="#">';
-						text+=state['obj'+(x-1)].right;
+						text+=state['obj'+(x-1)].right.toString();
 					text+='</a>';
 				}
 				text+='</li>';
@@ -276,21 +276,22 @@ function statement(){
 	text+='</ul>';
 	$('.tree').append(text);
 	
-	$('.tree').css('width',$('.tree ul').length * 75 - $('.tree ul').length * 20);
+	$('.tree').css('width',$('.tree ul').length * 80);
+	console.log(state);
 }
 
 
 //tree
 function printtree(obj,state){
 	var text = '';
-	text+='<a href="#">'+state[obj].parent+'</a>';
+	text+='<a href="#">'+state[obj].parent.toString()+'</a>';
 	text+='<ul>';
 		text+='<li>';
 		if(state[obj].left.indexOf('obj') == 0){
 			text+=printtree(state[obj].left,state);
 		}else{
 			text+='<a href="#">';
-				text+=state[obj].left;
+				text+=state[obj].left.toString();
 			text+='</a>';
 		}
 		text+='</li>';
@@ -299,7 +300,7 @@ function printtree(obj,state){
 			text+=printtree(state[obj].right,state);
 		}else{
 			text+='<a href="#">';
-				text+=state[obj].right;
+				text+=state[obj].right.toString();
 			text+='</a>';
 		}
 		text+='</li>';
