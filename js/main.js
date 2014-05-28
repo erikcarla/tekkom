@@ -183,13 +183,38 @@ function statement(){
 			token.push(operand[i]);
 	}
 	//want to get token? print token.. want to get datatype? print datatype	
+	$('#lex').empty();
+	var test = [];
+	var z = 0;
+	console.log(s.split(operand));
 	
-	for(var j = 0 ; j < token.length ; j++){
-		if(j == token.length-1)
-			$('#lex').append(token[j]);
-		else
-			$('#lex').append(token[j]+' '+operator[j]+' ');
+	for(var j = 0 ; j < operand.length ; j++){
+		var find = operand[j];
+		var re = new RegExp(find, 'g');
+
+		s = s.replace(re,token[j]);
 	}
+	$('#lex').append(s);
+	
+	// if(operator.length > token.length)
+		// test = operator;
+	// else
+		// test = token;
+	// for(var j = 0 ; j < test.length ; j++){
+		// if(j == token.length-1)
+			// $('#lex').append(token[z]);
+		// else if(operator[j+1] == '('){
+			// $('#lex').append(token[z]+' '+operator[j]+' '+operator[j+1]+' ');
+			// j++;
+		// }
+		// else if(operator[j] == ')'){
+			// $('#lex').append(token[z]+' '+operator[j]+' '+operator[j+1]+' ');
+			// j++;
+		// }
+		// else
+			// $('#lex').append(token[z]+' '+operator[j]+' ');
+		// z++;
+	// }
 	
 	//penampungan ke sebuah object untuk dibuat syntax`
 	var state = {};
@@ -198,7 +223,7 @@ function statement(){
 	var temporar = 0;
 	
 	tempseqoperator = operator;
-	tempseqtoken = token;
+	tempseqtoken = operand;
 	
 	
 	for(var j = 0 ; j < tempseqoperator.length ; j++){
@@ -207,52 +232,52 @@ function statement(){
 		}
 	}
 	
-	// for(var j = 0 ; j < tempseqoperator.length ; j++){
-		// if(tempseqoperator[j] == ')'){
-			// tempseqoperator.splice(j,1);
-			// for(var i = j-1 ; i >= 0 ; i--){
-				// if(tempseqoperator[i] == '('){
-					// tempseqoperator.splice(i,1);
-					// for(var k = i ; k < j-1 ; k++){		
-						// if(tempseqoperator[k] == '/' || tempseqoperator[k] == '*' || tempseqoperator[k] == '%'){
-							// var tree = {'left':tempseqtoken[k-kurung+1],'right':tempseqtoken[k-kurung+2],'parent':tempseqoperator[k]};
-							// state['obj'+x]=tree;
-							// tempseqtoken.splice(k-kurung+1,2,'obj'+x);
-							// tempseqoperator.splice(k,1);
-							// x++;
-							// k = i-1;
-							// j = j-1;
-						// }	
-					// }
-					// for(var k = i ; k < j-1 ; k++){		
-						// if(tempseqoperator[k] == '+' || tempseqoperator[k] == '-'){
-							// var tree = {'left':tempseqtoken[k-kurung+1],'right':tempseqtoken[k-kurung+2],'parent':tempseqoperator[k]};
-							// state['obj'+x]=tree;
-							// tempseqtoken.splice(k,2,'obj'+x);
-							// tempseqoperator.splice(k,1);
-							// x++;
-							// k = i-1;
-							// j = j-1;
-						// }	
-					// }
-					// for(var k = i ; k < j-1 ; k++){		
-						// if(tempseqoperator[k] == '='){
-							// var tree = {'left':tempseqtoken[k-kurung+1],'right':tempseqtoken[k-kurung+2],'parent':tempseqoperator[k]};
-							// state['obj'+x]=tree;
-							// tempseqtoken.splice(k,2,'obj'+x);
-							// tempseqoperator.splice(k,1);
-							// x++;
-							// k = i-1;
-							// j = j-1;
-						// }	
-					// }
-					// i = j;
-				// }
-			// }
-			// j = 0;
-		// }	
-	// }
-	
+	for(var j = 0 ; j < tempseqoperator.length ; j++){
+		if(tempseqoperator[j] == ')'){
+			tempseqoperator.splice(j,1);
+			for(var i = j-1 ; i >= 0 ; i--){
+				if(tempseqoperator[i] == '('){
+					tempseqoperator.splice(i,1);
+					for(var k = i ; k < j-1 ; k++){	
+						if(tempseqoperator[k] == '/' || tempseqoperator[k] == '*' || tempseqoperator[k] == '%'){
+							var tree = {'left':tempseqtoken[k-kurung+1],'right':tempseqtoken[k-kurung+2],'parent':tempseqoperator[k]};
+							state['obj'+x]=tree;
+							tempseqtoken.splice(k-kurung+1,2,'obj'+x);
+							tempseqoperator.splice(k,1);
+							x++;
+							k = i-1;
+							j = j-1;
+						}	
+					}
+					for(var k = i ; k < j-1 ; k++){	
+						if(tempseqoperator[k] == '+' || tempseqoperator[k] == '-'){
+							var tree = {'left':tempseqtoken[k-kurung+1],'right':tempseqtoken[k-kurung+2],'parent':tempseqoperator[k]};
+							state['obj'+x]=tree;
+							tempseqtoken.splice(k-kurung+1,2,'obj'+x);
+							tempseqoperator.splice(k,1);
+							x++;
+							k = i-1;
+							j = j-1;
+						}	
+					}
+					for(var k = i ; k < j-1 ; k++){	
+						if(tempseqoperator[k] == '='){
+							var tree = {'left':tempseqtoken[k-kurung+1],'right':tempseqtoken[k-kurung+2],'parent':tempseqoperator[k]};
+							state['obj'+x]=tree;
+							tempseqtoken.splice(k-kurung+1,2,'obj'+x);
+							tempseqoperator.splice(k,1);
+							x++;
+							k = i-1;
+							j = j-1;
+						}	
+					}
+					kurung--;
+					break;
+				}
+			}
+			j = 0;
+		}	
+	}
 	
 	for(var j = 0 ; j < tempseqtoken.length ; j++){
 		if(tempseqoperator[j] == '/' || tempseqoperator[j] == '*' || tempseqoperator[j] == '%'){
@@ -337,7 +362,10 @@ function statement(){
 		}
 		if($.isNumeric(operand[i]) && ceknumber == true){
 			token.push(operand[i]);
-			datatype.push('float');
+			if(operand[i].split('.') != undifined)
+				datatype.push('int');
+			else
+				datatype.push('float');
 		}
 	}
 	
@@ -347,6 +375,60 @@ function statement(){
 	temporar = 0;
 	var tempsemoperator = operator;
 	var tempsemtoken = token;
+	
+	for(var j = 0 ; j < tempsemoperator.length ; j++){
+		if(tempsemoperator[j] == '('){
+			kurung++;
+		}
+	}
+	
+	for(var j = 0 ; j < tempsemoperator.length ; j++){
+		if(tempsemoperator[j] == ')'){
+			tempsemoperator.splice(j,1);
+			for(var i = j-1 ; i >= 0 ; i--){
+				if(tempsemoperator[i] == '('){
+					tempsemoperator.splice(i,1);
+					for(var k = i ; k < j-1 ; k++){	
+						if(tempsemoperator[k] == '/' || tempsemoperator[k] == '*' || tempsemoperator[k] == '%'){
+							var tree = {'left':tempsemtoken[k-kurung+1],'right':tempsemtoken[k-kurung+2],'parent':tempsemoperator[k]};
+							state['obj'+x]=tree;
+							tempsemtoken.splice(k-kurung+1,2,'obj'+x);
+							tempsemoperator.splice(k,1);
+							x++;
+							k = i-1;
+							j = j-1;
+						}	
+					}
+					for(var k = i ; k < j-1 ; k++){	
+						if(tempsemoperator[k] == '+' || tempsemoperator[k] == '-'){
+							var tree = {'left':tempsemtoken[k-kurung+1],'right':tempsemtoken[k-kurung+2],'parent':tempsemoperator[k]};
+							state['obj'+x]=tree;
+							tempsemtoken.splice(k-kurung+1,2,'obj'+x);
+							tempsemoperator.splice(k,1);
+							x++;
+							k = i-1;
+							j = j-1;
+						}	
+					}
+					for(var k = i ; k < j-1 ; k++){	
+						if(tempsemoperator[k] == '='){
+							var tree = {'left':tempsemtoken[k-kurung+1],'right':tempsemtoken[k-kurung+2],'parent':tempsemoperator[k]};
+							state['obj'+x]=tree;
+							tempsemtoken.splice(k-kurung+1,2,'obj'+x);
+							tempsemoperator.splice(k,1);
+							x++;
+							k = i-1;
+							j = j-1;
+						}	
+					}
+					kurung--;
+					break;
+				}
+			}
+			j = 0;
+		}	
+	}
+	
 	for(var j = 0 ; j < datatype.length ; j++){
 		if($('.dataType').val() != datatype[j] && datatype[j] != 'token'){
 			var tree = {'left':tempsemtoken[j],'right':null,'parent':datatype[j]+' to '+$('.dataType').val()};
@@ -420,7 +502,7 @@ function statement(){
 	text+='</ul>';
 	$('#semantic').append(text);
 	
-	$('#semantic').css('width',$('#syntax ul').length * 80);
+	$('#semantic').css('width',$('#syntax ul').length * 90);
 }
 
 
