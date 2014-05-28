@@ -65,6 +65,13 @@ $(document).ready(function(){
 			$('#back').removeClass('iTree').addClass('iSemantic');
 			$('#next').removeClass('iTree').addClass('iSemantic');
 		}
+		else if($(sv).hasClass('iSemantic')){
+			$('#iSemantic').css('display','none');
+			$('#iCredit').css('display','');
+			
+			$('#next').css('display','none').removeClass('iSemantic').addClass('iCredit');
+			$('#back').removeClass('iSemantic').addClass('iCredit');
+		}
 	});
 	$('#back').click(function(){
 		var sv=this;
@@ -117,6 +124,13 @@ $(document).ready(function(){
 			$('#back').removeClass('iSemantic').addClass('iTree');
 			$('#next').removeClass('iSemantic').addClass('iTree');
 		}
+		else if($(sv).hasClass('iCredit')){
+			$('#iCredit').css('display','none');
+			$('#iSemantic').css('display','');
+			
+			$('#back').removeClass('iCredit').addClass('iSemantic');
+			$('#next').css('display','').removeClass('iCredit').addClass('iSemantic');
+		}
 	});
 	
 	//type checking
@@ -166,6 +180,9 @@ function statement(){
 		sequence = ["^","%","*","/","+","-","="];
 	var sLen = s.length;
 	var ceknumber = true;
+	
+	$('.statementtext').text(s);
+	
 	//token
 	for(var i = 0 ; i < operand.length ; i++){
 		var tr = $('#table-manager tbody tr').first();
@@ -186,13 +203,24 @@ function statement(){
 	$('#lex').empty();
 	var test = [];
 	var z = 0;
-	console.log(s.split(operand));
+	var toperand = [];
+	var toperand1 =[]
 	
 	for(var j = 0 ; j < operand.length ; j++){
-		var find = operand[j];
-		var re = new RegExp(find, 'g');
-
-		s = s.replace(re,token[j]);
+		if(toperand1.indexOf(operand[j]) == -1){
+			var find = operand[j];
+			var re = new RegExp(find, 'g');
+			toperand1.push(operand[j]);
+			s = s.replace(re,'#'+operand[j]+'#');
+		}
+	}
+	for(var j = 0 ; j < operand.length ; j++){
+		if(toperand.indexOf(operand[j]) == -1){
+			var find = '#'+operand[j]+'#';
+			var re = new RegExp(find, 'g');
+			toperand.push(operand[j]);
+			s = s.replace(re,token[j]);
+		}
 	}
 	$('#lex').append(s);
 	
@@ -223,7 +251,7 @@ function statement(){
 	var temporar = 0;
 	
 	tempseqoperator = operator;
-	tempseqtoken = operand;
+	tempseqtoken = token;
 	
 	
 	for(var j = 0 ; j < tempseqoperator.length ; j++){
@@ -560,6 +588,7 @@ function checkStatement(){
 				{
 					operator.push(t);
 				}
+				
 			}
 			else if(s[i] !== ' ')
 			{
@@ -590,7 +619,19 @@ function checkStatement(){
 		}
 	}
 	
+	var kurung = 0;
+	var kurungtup = 0;
+	for(var j = 0 ; j < operator.length ; j++){
+		if(operator[j] == '('){
+			kurung++;
+		}else if(operator[j] == ')'){
+			kurungtup++;
+		}
+	}
+	
 	if(checkoperand != tempop.length)
+		checkoperandtable = false;
+	if(kurung != kurungtup)
 		checkoperandtable = false;
 }
 
