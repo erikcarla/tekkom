@@ -252,7 +252,8 @@ function statement(){
 	
 	tempseqoperator = operator;
 	tempseqtoken = token;
-	
+	 
+	var ex = 0;
 	
 	for(var j = 0 ; j < tempseqoperator.length ; j++){
 		if(tempseqoperator[j] == '('){
@@ -530,7 +531,7 @@ function statement(){
 	text+='</ul>';
 	$('#semantic').append(text);
 	
-	$('#semantic').css('width',$('#syntax ul').length * 90);
+	$('#semantic').css('width',$('#syntax ul').length * 100);
 }
 
 
