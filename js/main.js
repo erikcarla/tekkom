@@ -255,13 +255,16 @@ function statement(){
 	 
 	var ex = 0;
 	
+	// for(var j = 0 ; j < tempseqoperator.length ; j++){
+		// if(tempseqoperator[j] == '('){
+			// kurung++;
+		// }
+	// }
+	
 	for(var j = 0 ; j < tempseqoperator.length ; j++){
 		if(tempseqoperator[j] == '('){
 			kurung++;
 		}
-	}
-	
-	for(var j = 0 ; j < tempseqoperator.length ; j++){
 		if(tempseqoperator[j] == ')'){
 			tempseqoperator.splice(j,1);
 			for(var i = j-1 ; i >= 0 ; i--){
@@ -300,7 +303,7 @@ function statement(){
 							j = j-1;
 						}	
 					}
-					kurung--;
+					kurung=0;
 					break;
 				}
 			}
@@ -398,12 +401,23 @@ function statement(){
 		}
 	}
 	
+
+	
 	state = {};
 	x = 0;
 	kurung = 0;
 	temporar = 0;
 	var tempsemoperator = operator;
 	var tempsemtoken = token;
+	
+	for(var j = 0 ; j < datatype.length ; j++){
+		if($('.dataType').val() != datatype[j] && datatype[j] != 'token'){
+			var tree = {'left':tempsemtoken[j],'right':null,'parent':datatype[j]+' to '+$('.dataType').val()};
+			state['obj'+x]=tree;
+			tempsemtoken.splice(j,1,'obj'+x);
+			x++;
+		}
+	}
 	
 	for(var j = 0 ; j < tempsemoperator.length ; j++){
 		if(tempsemoperator[j] == '('){
@@ -458,14 +472,7 @@ function statement(){
 		}	
 	}
 	
-	for(var j = 0 ; j < datatype.length ; j++){
-		if($('.dataType').val() != datatype[j] && datatype[j] != 'token'){
-			var tree = {'left':tempsemtoken[j],'right':null,'parent':datatype[j]+' to '+$('.dataType').val()};
-			state['obj'+x]=tree;
-			tempsemtoken.splice(j,1,'obj'+x);
-			x++;
-		}
-	}
+	
 	
 	for(var j = 0 ; j < tempsemtoken.length ; j++){
 		if(tempsemoperator[j] == '/' || tempsemoperator[j] == '*' || tempsemoperator[j] == '%'){
