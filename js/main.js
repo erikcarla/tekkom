@@ -1,5 +1,10 @@
 var checkoperandtable = true,operator = [],operand = [];var checkEnd = true;
 $(document).ready(function(){
+	$('.tree a').click(function(){
+		console.log($(this).text());
+	});
+
+
 	//view
 	$('#next').click(function(){
 		var sv=this;
@@ -168,6 +173,7 @@ $(document).ready(function(){
 		content+='</select></td></tr>';
 		$('#table-manager').append(content);
 	});
+	
 	
 	
 });
@@ -372,7 +378,7 @@ function statement(){
 	text+='</ul>';
 	$('#syntax').append(text);
 	
-	$('#syntax').css('width',$('#syntax ul').length * 80);
+	$('#syntax').css('width',$('#syntax ul').length * 100);
 	
 	//semantic 
 	
@@ -538,7 +544,7 @@ function statement(){
 	text+='</ul>';
 	$('#semantic').append(text);
 	
-	$('#semantic').css('width',$('#syntax ul').length * 100);
+	$('#semantic').css('width',$('#syntax ul').length * 110);
 }
 
 
