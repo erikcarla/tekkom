@@ -1,8 +1,5 @@
 var checkoperandtable = true,operator = [],operand = [];var checkEnd = true;
 $(document).ready(function(){
-	$('.tree a').click(function(){
-		console.log($(this).text());
-	});
 
 
 	//view
@@ -213,7 +210,7 @@ function statement(){
 	var toperand1 =[]
 	
 	for(var j = 0 ; j < operand.length ; j++){
-		if(toperand1.indexOf(operand[j]) == -1){
+		if(toperand1.indexOf(operand[j]) == -1 && !$.isNumeric(operand[j])){
 			var find = operand[j];
 			var re = new RegExp(find, 'g');
 			toperand1.push(operand[j]);
@@ -221,7 +218,7 @@ function statement(){
 		}
 	}
 	for(var j = 0 ; j < operand.length ; j++){
-		if(toperand.indexOf(operand[j]) == -1){
+		if(toperand.indexOf(operand[j]) == -1 && !$.isNumeric(operand[j])){
 			var find = '#'+operand[j]+'#';
 			var re = new RegExp(find, 'g');
 			toperand.push(operand[j]);
@@ -400,7 +397,7 @@ function statement(){
 		}
 		if($.isNumeric(operand[i]) && ceknumber == true){
 			token.push(operand[i]);
-			if(operand[i].split('.') != undifined)
+			if(operand[i].split('.')[1] == null)
 				datatype.push('int');
 			else
 				datatype.push('float');
@@ -408,7 +405,7 @@ function statement(){
 	}
 	
 
-	
+	console.log(datatype);
 	state = {};
 	x = 0;
 	kurung = 0;
@@ -425,13 +422,13 @@ function statement(){
 		}
 	}
 	
+
+	
 	for(var j = 0 ; j < tempsemoperator.length ; j++){
 		if(tempsemoperator[j] == '('){
 			kurung++;
 		}
-	}
-	
-	for(var j = 0 ; j < tempsemoperator.length ; j++){
+
 		if(tempsemoperator[j] == ')'){
 			tempsemoperator.splice(j,1);
 			for(var i = j-1 ; i >= 0 ; i--){
@@ -470,7 +467,7 @@ function statement(){
 							j = j-1;
 						}	
 					}
-					kurung--;
+					kurung=0;
 					break;
 				}
 			}
