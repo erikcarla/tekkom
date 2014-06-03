@@ -26,7 +26,14 @@
 		<div class="container" id="index">
 			<div class="row" style="margin-top:70px; text-align:center" >
 				<label><h2><small>Welcome to Semantic Analyzer Simulation</small></h2></label>	
-				
+				<div class="col-md-12" style="background:#E2E2E2;padding-top:20px;padding-bottom:50px;">
+					<h3>How to use:</h3>
+					1. Click next to proceed to the next step.</br>
+					2. Select Type Checking to change the data types of variables adapted to the type of data in the compiler.</br>
+					3. Fill the token.</br>
+					4. Fill Table Manager with variable and select the desired data type.</br>
+					5. Fill the Statement.</br>
+				</div>
 				
 			</div>
 		</div>
@@ -65,15 +72,26 @@
 		</div>
 		<div class="container" id="iLexical" style="display:none;">
 			<div class="row" style="margin-top:70px;" >
+				<label><h2><small>Table Manager</small></h2></label>	
+				<table class="table table-striped" id="table-manager-s">
+					<thead>
+						<th>Token</th>
+						<th>Lexeme</th>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
 				<label><h2><small>Lexical Analyzer</small></h2></label>
-				<div id="lex"></div>
+				<div id="lex"></div></br>
+				<p>Note : In the lexical stage, turning a variable into &lt;token,lexeme id&gt;</p>
 			</div>
 		</div>
 		<div class="container" id="iTree" style="display:none;">
 			<div class="row" style="margin-top:70px;margin-bottom:70px;" >
 				<label style="position:fixed;"><h2><small>Syntax Analyzer</small></h2></label></br></br></br>
 				<label style="position:fixed;" class="statementtext"></label>
-				<div class="tree" id="syntax" style="margin: 0px auto;margin-top:30px;">
+				
+				<div class="tree" id="syntax" style="margin: 0px auto;margin-top:30px;margin-left:50px;">
 				</div>
 				
 			</div>
