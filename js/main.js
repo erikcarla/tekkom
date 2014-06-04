@@ -61,6 +61,7 @@ $(document).ready(function(){
 			$('#next').removeClass('iLexical').addClass('iTree');
 		}
 		else if($(sv).hasClass('iTree')){
+			$('.txtNote').empty();
 			$('#iTree').css('display','none');
 			$('#iSemantic').css('display','');
 			
@@ -106,6 +107,7 @@ $(document).ready(function(){
 			$('#next').removeClass('iStatement').addClass('iTableManager');
 		}
 		else if($(sv).hasClass('iLexical')){
+		
 			$('#iLexical').css('display','none');
 			$('#iStatement').css('display','');
 			
@@ -113,6 +115,7 @@ $(document).ready(function(){
 			$('#next').removeClass('iLexical').addClass('iStatement');
 		}
 		else if($(sv).hasClass('iTree')){
+			$('.txtNote').empty();
 			$('#iTree').css('display','none');
 			$('#iLexical').css('display','');
 			
@@ -120,6 +123,7 @@ $(document).ready(function(){
 			$('#next').removeClass('iTree').addClass('iLexical');
 		}
 		else if($(sv).hasClass('iSemantic')){
+			$('.txtNote').empty();
 			$('#iSemantic').css('display','none');
 			$('#iTree').css('display','');
 			
