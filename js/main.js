@@ -534,16 +534,24 @@ function statement(){
 	text+='<ul>'
 		text+='<li>';
 			text+='<a href="#" data-tree="';
-				if(state['obj'+(x-1)].left != null){
-					if(state['obj'+(x-1)].left.indexOf('obj') == 0)
-						text+=searchtree(state['obj'+(x-1)].left,state);
-					else
-						text+=state['obj'+(x-1)].left+' ';
+				if(state['obj'+(x-1)].parent.indexOf('to') != -1){
+					text+='('+state['obj'+(x-1)].parent+') ';
+					if(state['obj'+(x-1)].left != null){
+						if(state['obj'+(x-1)].left.indexOf('obj') == 0)
+							text+=searchtree(state['obj'+(x-1)].left,state);
+						else
+							text+=state['obj'+(x-1)].left+' ';
+					}
 				}
-				if(state['obj'+(x-1)].parent.indexOf('to') != -1)
-					text+='-> ('+state['obj'+(x-1)].parent+') ';
-				else
+				else{
+					if(state['obj'+(x-1)].left != null){
+						if(state['obj'+(x-1)].left.indexOf('obj') == 0)
+							text+=searchtree(state['obj'+(x-1)].left,state);
+						else
+							text+=state['obj'+(x-1)].left+' ';
+					}
 					text+=state['obj'+(x-1)].parent+' ';
+				}
 				if(state['obj'+(x-1)].right != null){
 					if(state['obj'+(x-1)].right.indexOf('obj') == 0)
 						text+=searchtree(state['obj'+(x-1)].right,state);
@@ -612,16 +620,25 @@ function statement(){
 //search tree
 function searchtree(obj,state){
 	var text = '';
-	if(state[obj].left != null){
-		if(state[obj].left.indexOf('obj') == 0)
-			text+=searchtree(state[obj].left,state);
-		else
-			text+=state[obj].left+' ';
-	}
-	if(state[obj].parent.indexOf('to') != -1)
-		text+='-> ('+state[obj].parent+') ';
-	else
+	if(state[obj].parent.indexOf('to') != -1){
+		text+='('+state[obj].parent+') ';
+		if(state[obj].left != null){
+			if(state[obj].left.indexOf('obj') == 0)
+				text+=searchtree(state[obj].left,state);
+			else
+				text+=state[obj].left+' ';
+		}
+	}	
+	else{
+		if(state[obj].left != null){
+			if(state[obj].left.indexOf('obj') == 0)
+				text+=searchtree(state[obj].left,state);
+			else
+				text+=state[obj].left+' ';
+		}
 		text+=state[obj].parent+' ';
+		
+	}
 	if(state[obj].right != null){
 		if(state[obj].right.indexOf('obj') == 0)
 			text+=searchtree(state[obj].right,state);
@@ -640,16 +657,24 @@ function printtree(obj,state){
 	console.log(state[obj].parent.indexOf('to'));
 	var text = '';
 	text+='<a href="#" data-tree="';
-		if(state[obj].left != null){
-			if(state[obj].left.indexOf('obj') == 0)
-				text+=searchtree(state[obj].left,state);
-			else
-				text+=state[obj].left+' ';
+		if(state[obj].parent.indexOf('to') != -1){
+			text+='('+state[obj].parent+') ';
+			if(state[obj].left != null){
+				if(state[obj].left.indexOf('obj') == 0)
+					text+=searchtree(state[obj].left,state);
+				else
+					text+=state[obj].left+' ';
+			}
 		}
-		if(state[obj].parent.indexOf('to') != -1)
-			text+='-> ('+state[obj].parent+') ';
-		else
+		else{
+			if(state[obj].left != null){
+				if(state[obj].left.indexOf('obj') == 0)
+					text+=searchtree(state[obj].left,state);
+				else
+					text+=state[obj].left+' ';
+			}
 			text+=state[obj].parent+' ';
+		}
 		if(state[obj].right != null){
 			if(state[obj].right.indexOf('obj') == 0)
 				text+=searchtree(state[obj].right,state);
