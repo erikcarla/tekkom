@@ -208,13 +208,14 @@ function statement(){
 	tr = $('#table-manager tbody tr').first();
 	while($(tr).length !== 0)
 	{
-		content+='<tr><td>'+'&lt;'+ $('#iTokenText').val()+','+ $('.lexeme-id',tr).text()+'&gt;'
-			+'</td><td>'+$('.lexeme',tr).val()+'</td></tr>';
+		if($('.lexeme',tr).val() != '')
+			content+='<tr><td>'+'&lt;'+ $('#iTokenText').val()+','+ $('.lexeme-id',tr).text()+'&gt;'
+				+'</td><td>'+$('.lexeme',tr).val()+'</td></tr>';
 		tr = $(tr).next();
 	}
 	$('#table-manager-s tbody').append(content);
 	
-	$('#lex').empty();
+	$('.lex').empty();
 	var test = [];
 	var z = 0;
 	var toperand = [];
@@ -236,7 +237,7 @@ function statement(){
 			s = s.replace(re,token[j]);
 		}
 	}
-	$('#lex').append(s);
+	$('.lex').append(s);
 	
 	// if(operator.length > token.length)
 		// test = operator;
@@ -361,23 +362,23 @@ function statement(){
 	var text = '';
 	text+='<ul>'
 		text+='<li>';
-			text+='<a href="#" title="';
+			text+='<a href="#" data-tree="';
 				if(state['obj'+(x-1)].left.indexOf('obj') == 0)
-					
+					text+=searchtree(state['obj'+(x-1)].left,state);
 				else
-					tree+=state['obj'+(x-1)].left+' ';
-				tree+=state['obj'+(x-1)].parent+' ';
+					text+=state['obj'+(x-1)].left+' ';
+				text+=state['obj'+(x-1)].parent+' ';
 				if(state['obj'+(x-1)].right.indexOf('obj') == 0)
-					
+					text+=searchtree(state['obj'+(x-1)].right,state);
 				else
-					tree+=state['obj'+(x-1)].right;
-			text+='">'+state['obj'+(x-1)].parent'</a>';
+					text+=state['obj'+(x-1)].right+' ';
+			text+='">'+state['obj'+(x-1)].parent+'</a>';
 			text+='<ul>';
 				text+='<li>';
 				if(state['obj'+(x-1)].left.indexOf('obj') == 0){
 					text+=printtree(state['obj'+(x-1)].left,state);
 				}else{
-					text+='<a href="#" title="'+state['obj'+(x-1)].left+'">';
+					text+='<a href="#" data-tree="'+state['obj'+(x-1)].left+'">';
 						text+=state['obj'+(x-1)].left;
 					text+='</a>';
 				}
@@ -386,7 +387,7 @@ function statement(){
 				if(state['obj'+(x-1)].right.indexOf('obj') == 0){
 					text+=printtree(state['obj'+(x-1)].right,state);
 				}else{
-					text+='<a href="#" title="'+state['obj'+(x-1)].right+'">';
+					text+='<a href="#" data-tree="'+state['obj'+(x-1)].right+'">';
 						text+=state['obj'+(x-1)].right;
 					text+='</a>';
 				}
@@ -395,6 +396,7 @@ function statement(){
 		text+='</li>';
 	text+='</ul>';
 	$('#syntax').append(text);
+	
 	$('#syntax').css('width',$('#syntax ul').length * 100);
 	
 	//semantic 
@@ -531,7 +533,24 @@ function statement(){
 	text = '';
 	text+='<ul>'
 		text+='<li>';
-			text+='<a href="#" data-tree="'+state['obj'+(x-1)].left+' '+state['obj'+(x-1)].parent+' '+state['obj'+(x-1)].right+'">'+state['obj'+(x-1)].parent+'</a>';
+			text+='<a href="#" data-tree="';
+				if(state['obj'+(x-1)].left != null){
+					if(state['obj'+(x-1)].left.indexOf('obj') == 0)
+						text+=searchtree(state['obj'+(x-1)].left,state);
+					else
+						text+=state['obj'+(x-1)].left+' ';
+				}
+				if(state['obj'+(x-1)].parent.indexOf('to') != -1)
+					text+='-> ('+state['obj'+(x-1)].parent+') ';
+				else
+					text+=state['obj'+(x-1)].parent+' ';
+				if(state['obj'+(x-1)].right != null){
+					if(state['obj'+(x-1)].right.indexOf('obj') == 0)
+						text+=searchtree(state['obj'+(x-1)].right,state);
+					else
+						text+=state['obj'+(x-1)].right+' ';
+				}
+			text+='">'+state['obj'+(x-1)].parent+'</a>';
 			text+='<ul>';
 				if(state['obj'+(x-1)].left != null){
 					text+='<li>';
@@ -560,7 +579,7 @@ function statement(){
 	text+='</ul>';
 	$('#semantic').append(text);
 	
-	$('#semantic').css('width',$('#syntax ul').length * 110);
+	$('#semantic').css('width',$('#semantic ul').length * 110);
 	
 	
 	// var y = 0;
@@ -575,57 +594,76 @@ function statement(){
 		// z++;
 	// }
 	// $('#txtNote').append(txtNot);
-		// var txtNot ='';
-		// $('#syntax a').hover(function(){
-			// $('#txtNote').empty();
-			// var sv = this;
-			// txtNot = $(sv).attr('data-tree').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</br>';
-			// $('#txtNote').append(txtNot);
-		// });
+	$('.tree a').hover(function(){
+		$('.txtNote').empty();
+		
+		var txtNot ='';
+		var sv = $(this).closest('li');
+		// if($(sv).first().attr('a').indexOf('obj') == 0)
+			// printnote($(sv).first().attr('a'),state);
+		// else
+			// txtNot += $(sv).first().attr('a').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</br>';
+		// txtNot += $(sv).attr('data-tree').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</br>';
+		txtNot +=$(sv).children().attr('data-tree').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+		$('.txtNote').append(txtNot);
+	});
 }
 
-
-//tree
-function printtree(obj,state){
+//search tree
+function searchtree(obj,state){
 	var text = '';
-	text+='<a href="#" title="'+state[obj].left+' '+state[obj].parent+' '+state[obj].right+'">'+state[obj].parent+'</a>';
-	text+='<ul>';
-		if(state[obj].left != null){
-			text+='<li>';
-			if(state[obj].left.indexOf('obj') == 0){
-				text+=printtree(state[obj].left,state);
-			}else{
-				text+='<a href="#" title="'+state[obj].left+'">';
-					text+=state[obj].left;
-				text+='</a>';
-			}
-			text+='</li>';
-		}
-		if(state[obj].right != null){
-			text+='<li>';
-			if(state[obj].right.indexOf('obj') == 0){
-				text+=printtree(state[obj].right,state);
-			}else{
-				text+='<a href="#" title="'+state[obj].right+'">';
-					text+=state[obj].right;
-				text+='</a>';
-			}
-			text+='</li>';
-		}
-	text+='</ul>';
+	if(state[obj].left != null){
+		if(state[obj].left.indexOf('obj') == 0)
+			text+=searchtree(state[obj].left,state);
+		else
+			text+=state[obj].left+' ';
+	}
+	if(state[obj].parent.indexOf('to') != -1)
+		text+='-> ('+state[obj].parent+') ';
+	else
+		text+=state[obj].parent+' ';
+	if(state[obj].right != null){
+		if(state[obj].right.indexOf('obj') == 0)
+			text+=searchtree(state[obj].right,state);
+		else
+			text+=state[obj].right+' ';
+	}
 	return text;
 }
 
+
+
+//tree
+
+
 function printtree(obj,state){
+	console.log(state[obj].parent.indexOf('to'));
 	var text = '';
-	text+='<a href="#" title="'+state[obj].left+' '+state[obj].parent+' '+state[obj].right+'">'+state[obj].parent+'</a>';
+	text+='<a href="#" data-tree="';
+		if(state[obj].left != null){
+			if(state[obj].left.indexOf('obj') == 0)
+				text+=searchtree(state[obj].left,state);
+			else
+				text+=state[obj].left+' ';
+		}
+		if(state[obj].parent.indexOf('to') != -1)
+			text+='-> ('+state[obj].parent+') ';
+		else
+			text+=state[obj].parent+' ';
+		if(state[obj].right != null){
+			if(state[obj].right.indexOf('obj') == 0)
+				text+=searchtree(state[obj].right,state);
+			else
+				text+=state[obj].right+' ';
+		}
+	text+='">'+state[obj].parent+'</a>';
 	text+='<ul>';
 		if(state[obj].left != null){
 			text+='<li>';
 			if(state[obj].left.indexOf('obj') == 0){
 				text+=printtree(state[obj].left,state);
 			}else{
-				text+='<a href="#" title="'+state[obj].left+'">';
+				text+='<a href="#" data-tree="'+state[obj].left+'">';
 					text+=state[obj].left;
 				text+='</a>';
 			}
@@ -636,7 +674,7 @@ function printtree(obj,state){
 			if(state[obj].right.indexOf('obj') == 0){
 				text+=printtree(state[obj].right,state);
 			}else{
-				text+='<a href="#" title="'+state[obj].right+'">';
+				text+='<a href="#" data-tree="'+state[obj].right+'">';
 					text+=state[obj].right;
 				text+='</a>';
 			}

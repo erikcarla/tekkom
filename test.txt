@@ -9,14 +9,3 @@ a*b-(a+b+(b-d*a+c)+c)/e
 a*b-(a+b+(a-(b-d*a+c))+c)/e
 
 a=(b+c)*a-b/(a-c)
-
-
-9. mov 2,a
-10.jump 12
-11.mov 3,a
-12.mov a,R3
-13.eq a,R3
-14.jumpf 18
-15.mov 2,a
-16.mov 1,a
-17.jump 12

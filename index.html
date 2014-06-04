@@ -33,6 +33,7 @@
 					3. Fill the token.</br>
 					4. Fill Table Manager with variable and select the desired data type.</br>
 					5. Fill the Statement.</br>
+					6. Hover the part of tree to see the detail.</br>
 				</div>
 				
 			</div>
@@ -82,24 +83,38 @@
 					</tbody>
 				</table>
 				<label><h2><small>Lexical Analyzer</small></h2></label>
-				<div id="lex"></div></br>
+				<div class="lex"></div></br>
 				<p>Note : In the lexical stage, turning a variable into &lt;token,lexeme id&gt;</p>
 			</div>
 		</div>
-		<div class="container" id="iTree" style="display:none;">
+		<div class="container" id="iTree" style="display:none;background:white;">
 			<div class="row" style="margin-top:70px;margin-bottom:70px;" >
 				<label style="position:fixed;"><h2><small>Syntax Analyzer</small></h2></label></br></br></br>
-				<label style="position:fixed;" class="statementtext"></label>
+				<label style="position:fixed;" class="statementtext"></label></br></br>
 				
-				<div class="tree" id="syntax" style="margin: 0px auto;margin-top:30px;margin-left:50px;">
+				<label style="position:fixed;"><h4><small>Lexical Analyzer</small></h4></label></br></br>
+				<div class="lex" style="position:fixed;"></div></br>
+				
+				<label style="position:fixed;"><h4><small>Explanation</small></h4></label></br></br>
+				<label style="position:fixed;" class="txtNote"></label>
+				
+				
+				<div class="tree" id="syntax" style="margin: 0px auto;margin-top:30px;">
 				</div>
 				
 			</div>
 		</div>
-		<div class="container" id="iSemantic" style="display:none;">
+		<div class="container" id="iSemantic" style="display:none;background:white;">
 			<div class="row" style="margin-top:70px;margin-bottom:70px;" >
 				<label style="position:fixed;"><h2><small>Semantic Analyzer</small></h2></label></br></br></br>
-				<label style="position:fixed;" class="statementtext"></label>
+				<label style="position:fixed;" class="statementtext"></label></br></br>
+				
+				<label style="position:fixed;"><h4><small>Lexical Analyzer</small></h4></label></br></br>
+				<div class="lex" style="position:fixed;"></div></br>
+				
+				<label style="position:fixed;"><h4><small>Explanation</small></h4></label></br></br>
+				<label style="position:fixed;" class="txtNote"></label>
+				
 				<div class="tree" id="semantic" style="margin: 0px auto;margin-top:30px;">
 				</div>
 			</div>
