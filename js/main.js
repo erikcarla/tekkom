@@ -154,7 +154,7 @@ $(document).ready(function(){
 	
 	//table manager
 	var tempdatatype={
-		value: ["int","float","token","token"],
+		value: ["int","float","char","boolean"],
 		desc: ["Integer","Float","Char","Boolean"]
 	};
 	var content="";
@@ -439,7 +439,7 @@ function statement(){
 	var tempsemtoken = token;
 	
 	for(var j = 0 ; j < datatype.length ; j++){
-		if($('.dataType').val() != datatype[j] && datatype[j] != 'token'){
+		if($('.dataType').val() != datatype[j] /*&& datatype[j] != 'token'*/){
 			var tree = {'left':tempsemtoken[j],'right':null,'parent':datatype[j]+' to '+$('.dataType').val()};
 			state['obj'+x]=tree;
 			tempsemtoken.splice(j,1,'obj'+x);
