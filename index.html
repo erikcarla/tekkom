@@ -33,20 +33,27 @@
 					3. Fill the token.</br>
 					4. Fill Table Manager with variable and select the desired data type.</br>
 					5. Fill the Statement.</br>
-					6. Hover the part of tree to see the detail.</br>
+					6. Hover the part of tree to see the detail.</br></br>
+					<strong>NB: Target user = Mahasiswa IT, Expert User.</strong></br>
 				</div>
 				
 			</div>
 		</div>
 		<div class="container" id="iType" style="display:none;">
 			<div class="row" style="margin-top:70px;" >
-				<label><h2><small>Type Checking</small></h2></label>	
+				<label><h2><small>Type Checking</small></h2></label>
 			</div>
+			<br/><p>Type checking will check that the type of a construct should match the expected context. For example: in pascal mod arithmetic operators require operands of type integer. 
+The design of a type checker for a language based on the information about the syntactic construct in his language, well-defined type, and the type of rules that provide a language construct.</p>
+				</br><p>The function of type checking is to select the base type or expression will depend on the language that will be examined.</p>
+			
 		</div>
 		<div class="container" id="iToken" style="display:none;">
 			<div class="row" style="margin-top:70px;" >
 				<label><h2><small>Token</small></h2></label>	
 				<input type="text" class="form-control" id="iTokenText" maxlength="3"/>* max 3 characters
+				<br/><br/><p>Token is a sequence of characters in a unit having its own meaning. 
+Its function is to classify a source program.</p>
 			</div>
 		</div>
 		<div class="container" id="iTableManager" style="display:none;">
@@ -62,13 +69,21 @@
 					<tbody>
 					</tbody>
 				</table>
-				
+				<p>Table Manager here as a determinant of operands and operand data types that will be used on the statement page. 
+serves to Provide instruction for the user to understand that each operand can have different data types.</p>
+<br/><p>Lexeme id is a marker
+
+for operands in the token when it has been inserted into the tree with the name of operand</p>
 			</div>
 		</div>
 		<div class="container" id="iStatement" style="display:none;">
 			<div class="row" style="margin-top:70px;" >
 				<label><h2><small>Statement</small></h2></label>
 				<input type="text" id="statement" class="form-control"/>
+				<br/>
+				<p>Statement is a command to run. 
+restriction </p>
+<p><strong>NB : All characters in the input statement must be declared in the table manager.</strong></p>
 			</div>
 		</div>
 		<div class="container" id="iLexical" style="display:none;">
@@ -89,18 +104,15 @@
 		</div>
 		<div class="container" id="iTree" style="display:none;background:white;">
 			<div class="row" style="margin-top:70px;margin-bottom:70px;" >
-				<div class="navbar-collapse">
+				<div class="navbar-collapse" style="position:fixed;">
 					<ul class="nav" style="float:left;">
 						<li><label><h2><small>Syntax Analyzer</small></h2></label></li>
 						<li><label class="statementtext"></label><!--index--></li>
 					</ul>
-					<ul class="nav navbar-nav" style="float:right;width:169px;margin-top:-3px">
-						<li><label ><h2><small>Lexical Analyzer</small></h2></label></li>
-						<li><div class="lex"></div></li>
-					</ul>
+					
 				</div>
-				<label style="position:fixed;margin-left:15px"><h4><small>Explanation</small></h4></label></br></br>
-				<label style="position:fixed;margin-left:15px" class="txtNote"></label>
+				<label style="position:fixed;margin-left:15px;margin-top:64px;"><h4><small>Explanation</small></h4></label></br></br>
+				<label style="position:fixed;margin-left:15px;margin-top:64px;" class="txtNote"></label>
 				
 				
 				<div class="tree" id="syntax" style="margin: 0px auto;margin-top:30px;">
@@ -110,20 +122,19 @@
 		</div>
 		<div class="container" id="iSemantic" style="display:none;background:white;">
 			<div class="row" style="margin-top:70px;margin-bottom:70px;" >
-				<div class="navbar-collapse">
+				<div class="navbar-collapse col-md-12" style="position:fixed;margin-top:8px;width:87%;">
 					<ul class="nav" style="float:left;">
+						<li><p>Semantic is included in the analysis process. In the analysis 3 processes occur. They are lexical analysis, syntactic analysis and semantic analysis. 
+In the lexical analysis the characters that make up the source program is read from left to right and grouped in what is called a token (scanning). Then after scanning, character or token obtained on a lexical analysis are compiled and classified in a particular hierarchy as a whole has a certain meaning. After all that processes, final structure that has been obtained will be checked and examined its suitability with existing program components, known as semantic analysis.</p>
 						<li><label><h2><small>Semantic Analyzer</small></h2></label></li>
 						<li><label class="statementtext"></label><!--index--></li>
+						<li><label><h4><small>Explanation</small></h4></label></li>
+						<li><label class="txtNote"></label></li>
 					</ul>
-					<ul class="nav navbar-nav" style="float:right;width:169px;margin-top:-3px">
-						<li><label ><h2><small>Lexical Analyzer</small></h2></label></li>
-						<li><div class="lex"></div></li>
-					</ul>
+					
 				</div>
-				<label style="position:fixed;margin-left:15px"><h4><small>Explanation</small></h4></label></br></br>
-				<label style="position:fixed;margin-left:15px" class="txtNote"></label>
 				
-				<div class="tree" id="semantic" style="margin: 0px auto;margin-top:30px;">
+				<div class="tree" id="semantic" style="margin: 0px auto;margin-top:200px;">
 				</div>
 			</div>
 		</div>

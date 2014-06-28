@@ -37,12 +37,12 @@ $(document).ready(function(){
 			checkoperandtable = true;
 			checkStatement();
 			if(checkoperandtable == false){
-				alert('Operand tersebut belum terdaftar di dalam table');
+				alert('Operand does not exists in the table manager');
 			}
 			else if(operator[0] == undefined || operand[0] == undefined || operand[1] == undefined )
-				alert('Error');
+				alert('Syntax error');
 			else if($('#iTokenText').val() == '')
-				alert('Token belum terdaftar');
+				alert('Token has not registered');
 			else{
 				$('#iStatement').css('display','none');
 				$('#iLexical').css('display','');
@@ -274,6 +274,18 @@ function statement(){
 	 
 	var ex = 0;
 	
+	for(var j = 0 ; j < tempseqoperator.length ; j++){
+		if(tempseqoperator[j] == '++'){
+			tempseqtoken.splice(j+1,0,'1');
+			datatype.splice(j,0,'int');
+			tempseqoperator.splice(j,1,'+');
+		}
+		else if(tempseqoperator[j] == '--'){
+			tempseqtoken.splice(j+1,0,'1');
+			datatype.splice(j,0,'int');
+			tempseqoperator.splice(j,1,'-');
+		}
+	}
 	// for(var j = 0 ; j < tempseqoperator.length ; j++){
 		// if(tempseqoperator[j] == '('){
 			// kurung++;
@@ -438,6 +450,20 @@ function statement(){
 	var tempsemoperator = operator;
 	var tempsemtoken = token;
 	
+	
+	for(var j = 0 ; j < tempsemoperator.length ; j++){
+		if(tempsemoperator[j] == '++'){
+			tempsemtoken.splice(j+1,0,'1');
+			datatype.splice(j,0,'int');
+			tempsemoperator.splice(j,1,'+');
+		}
+		else if(tempsemoperator[j] == '--'){
+			tempsemtoken.splice(j+1,0,'1');
+			datatype.splice(j,0,'int');
+			tempsemoperator.splice(j,1,'-');
+		}
+	}
+	
 	for(var j = 0 ; j < datatype.length ; j++){
 		if($('.dataType').val() != datatype[j] /*&& datatype[j] != 'token'*/){
 			var tree = {'left':tempsemtoken[j],'right':null,'parent':datatype[j]+' to '+$('.dataType').val()};
@@ -447,7 +473,7 @@ function statement(){
 		}
 	}
 	
-
+	
 	
 	for(var j = 0 ; j < tempsemoperator.length ; j++){
 		if(tempsemoperator[j] == '('){
@@ -658,7 +684,6 @@ function searchtree(obj,state){
 
 
 function printtree(obj,state){
-	console.log(state[obj].parent.indexOf('to'));
 	var text = '';
 	text+='<a href="#" data-tree="';
 		if(state[obj].parent.indexOf('to') != -1){
@@ -717,7 +742,7 @@ function printtree(obj,state){
 function checkStatement(){
 	var s = $('#statement').val();
 	var t,n,tempop =[],
-		listR = ["(",")","^","%","*","/","+","-","="];
+		listR = ["(",")","^","%","*","/","+","-","=","++","--"];
 	var sLen = s.length;
 	operand = [];
 	operator = [];
@@ -730,13 +755,20 @@ function checkStatement(){
 			var j = i + 1;
 			if(listR.indexOf(s[i]) !== -1)
 			{
-				
+				for(var j = i + 1;listR.indexOf(s[j]) !== -1; j++)
+				{
+					t += s[j];
+				}
 				i += t.length - 1;
 				if(listR.indexOf(t) !== -1)
 				{
 					operator.push(t);
 				}
-				
+				else 
+				{
+					error = true;
+					alert('Operator error');
+				}
 			}
 			else if(s[i] !== ' ')
 			{
