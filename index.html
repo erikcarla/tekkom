@@ -1,155 +1,260 @@
-<html>
-	<head>
-		<link href="css/style.css" rel="stylesheet">
-		<link href="css/bootstrap.css" rel="stylesheet">
-		
-		<script src="js/jquery-1.10.2.js"></script>
-		<script src="js/bootstrap.js"></script>
-		
-		<script src="js/main.js"></script>
-		<title>Semantic Analyzer</title>
-	</head>
-	<body>
-		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-			<div class="container">
-				<div class="navbar-collapse">
-					<ul class="nav navbar-nav" style="float:left">
-						<li><a class="index" id="back" style="display:none;cursor:pointer;">< Back</a></li><!--index-->
-					</ul>
-					<ul class="nav navbar-nav" style="float:right">
-						<li><a class="index" id="next" style="cursor:pointer;">Next ></a></li>
-					</ul>
-					
-				</div>
-			</div>
-		</nav>
-		<div class="container" id="index">
-			<div class="row" style="margin-top:70px; text-align:center" >
-				<label><h2><small>Welcome to Semantic Analyzer Simulation</small></h2></label>	
-				<div class="col-md-12" style="background:#E2E2E2;padding-top:20px;padding-bottom:50px;">
-					<h3>How to use:</h3>
-					1. Click next to proceed to the next step.</br>
-					2. Select Type Checking to change the data types of variables adapted to the type of data in the compiler.</br>
-					3. Fill the token.</br>
-					4. Fill Table Manager with variable and select the desired data type.</br>
-					5. Fill the Statement.</br>
-					6. Hover the part of tree to see the detail.</br></br>
-					<strong>NB: Target user = Mahasiswa IT, Expert User.</strong></br>
-				</div>
-				
-			</div>
-		</div>
-		<div class="container" id="iType" style="display:none;">
-			<div class="row" style="margin-top:70px;" >
-				<label><h2><small>Type Checking</small></h2></label>
-			</div>
-			<br/><p>Type checking will check that the type of a construct should match the expected context. For example: in pascal mod arithmetic operators require operands of type integer. 
-The design of a type checker for a language based on the information about the syntactic construct in his language, well-defined type, and the type of rules that provide a language construct.</p>
-				</br><p>The function of type checking is to select the base type or expression will depend on the language that will be examined.</p>
-			
-		</div>
-		<div class="container" id="iToken" style="display:none;">
-			<div class="row" style="margin-top:70px;" >
-				<label><h2><small>Token</small></h2></label>	
-				<input type="text" class="form-control" id="iTokenText" maxlength="3"/>* max 3 characters
-				<br/><br/><p>Token is a sequence of characters in a unit having its own meaning. 
-Its function is to classify a source program.</p>
-			</div>
-		</div>
-		<div class="container" id="iTableManager" style="display:none;">
-			<div class="row" style="margin-top:70px;" >
-				<label><h2><small>Table Manager</small></h2></label>	
-				<button type="button" class="btn btn-primary btn-sm" style="float:right;margin-right:10px;margin-top:25px;" id="button-add">+ Add</button>
-				<table class="table table-striped" id="table-manager">
-					<thead>
-						<th>Lexeme ID</th>
-						<th>Lexeme</th>
-						<th>Data Type</th>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-				<p>Table Manager here as a determinant of operands and operand data types that will be used on the statement page. 
-serves to Provide instruction for the user to understand that each operand can have different data types.</p>
-<br/><p>Lexeme id is a marker
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
 
-for operands in the token when it has been inserted into the tree with the name of operand</p>
-			</div>
-		</div>
-		<div class="container" id="iStatement" style="display:none;">
-			<div class="row" style="margin-top:70px;" >
-				<label><h2><small>Statement</small></h2></label>
-				<input type="text" id="statement" class="form-control"/>
-				<br/>
-				<p>Statement is a command to run. 
-restriction </p>
-<p><strong>NB : All characters in the input statement must be declared in the table manager.</strong></p>
-			</div>
-		</div>
-		<div class="container" id="iLexical" style="display:none;">
-			<div class="row" style="margin-top:70px;" >
-				<label><h2><small>Table Manager</small></h2></label>	
-				<table class="table table-striped" id="table-manager-s">
-					<thead>
-						<th>Token</th>
-						<th>Lexeme</th>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-				<label><h2><small>Lexical Analyzer</small></h2></label>
-				<div class="lex"></div></br>
-				<p>Note : In the lexical stage, turning a variable into &lt;token,lexeme id&gt;</p>
-			</div>
-		</div>
-		<div class="container" id="iTree" style="display:none;background:white;">
-			<div class="row" style="margin-top:70px;margin-bottom:70px;" >
-				<div class="navbar-collapse" style="position:fixed;">
-					<ul class="nav" style="float:left;">
-						<li><label><h2><small>Syntax Analyzer</small></h2></label></li>
-						<li><label class="statementtext"></label><!--index--></li>
-					</ul>
+    <title> Semantic Analyzer</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/icomoon.css">
+    <link href="assets/css/animate-custom.css" rel="stylesheet">
+
+    
+    <script src="assets/js/jquery.min.js"></script>
+	<script type="text/javascript" src="assets/js/modernizr.custom.js"></script>
+    
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5shiv.js"></script>
+      <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+	
+	
+	<link href="assets/css/google.css" rel="stylesheet" text="text/css">
+    
+	<link href="assets/css/google2.css" rel="stylesheet" text="text/css">
+  </head>
+
+  <body data-spy="scroll" data-offset="0" data-target="#navbar-main">
+  
+  
+  	<div id="navbar-main">
+      <!-- Fixed navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon icon-shield" style="font-size:30px; color:#3498db;"></span>
+          </button>
+          <a class="navbar-brand hidden-xs hidden-sm" href="#home"><span class="icon icon-shield" style="font-size:18px; color:#3498db;"></span></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#home" class="smoothScroll">Home</a></li>
+			<li> <a href="#abstract" class="smoothScroll"> Abstract</a></li>
+			<li> <a href="#teori" class="smoothScroll"> Teori</a></li>
+			<li> <a href="#simulation" class="smoothScroll"> Simulation</a></li>
+			<li> <a href="#team" class="smoothScroll"> Team</a></li>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    </div>
+
+  
+  
+		<!-- ==== HEADERWRAP ==== -->
+	    <div id="headerwrap" id="home" name="home">
+			<header class="clearfix">
+	  		 		<h1><img src="assets/img/bg/simplycompiler.png"/></span></h1>
+	  		 		<p>Teknik Kompilasi 06PJT</p>
+	  		 		<p>Semantic Analyzer</p>
+	  		</header>	    
+	    </div><!-- /headerwrap -->
+		
+		<!-- ==== ABOUT ==== -->
+		<div class="container" id="abstract" name="abstract">
+			<div class="row white">
+			<br>
+				<h1 class="centered">ABSTRACT</h1>
+				<hr>
+				
+				<div class="col-md-12">
+					<p>Website ini akan menjelaskan tentang tahapan-tahapan dari compiler, khususnya tahapan analisis semantik. Analisis semantik yang merupakan tahap yang menjembatani antara analisis sintaks dan pembangkitan kode antara (intermediate code generator). Hal ini dilakukan dengan memeriksa tipe-tipe data yang ada dari pohon (tree) yang dibuat oleh sintaks, dan membaginya agar dapat dibuat jadi kode. Paper ini juga akan memberi contoh dari analisis semantik.</p>
+				</div><!-- col-md-6 -->
+				
+				
+			</div><!-- row -->
+		</div><!-- container -->
+		
+		
+  		<section class="section-divider textdivider divider4">
+			<div class="container">
+				<h1>LIFE</h1>
+				<hr>
+				<p>We will never know the real answer, before you try.</p>
+			</div><!-- container -->
+		</section><!-- section -->
+
+
+		<div class="container" id="teori" name="teori">
+			<div class="row white">
+			<br>
+				<h1 class="centered">Teori</h1>
+				<hr>
+				
+				<div class="col-md-6">
+					<p>Analisis Semantik adalah proses setelah melewati proses scanning dan parsing. Pada tahap ini dilakukan pengecekan pada struktur akhir yang telah diperoleh dan diperiksa kesesuaiannya dengan komponen program yang ada. Merupakan pusat dari tahapan translasi, struktur sintaktik yang dikenali oleh Analisis Sintaktik diproses, dan struktur objek eksekusi sudah mulai dibentuk. Analisis Semantik kemudian menjadi jembatan antara analisis dan sintesis dari translasi. Secara global, fungsi dari semantic analyzer adalah untuk menentukan makna dari serangkaian instruksi yang terdapat dalam program sumber.</p>
+				</div><!-- col-md-6 -->
+				
+				<div class="col-md-6">
+					<p>Analisis Semantik menghasilkan suatu kode objek yang dapat dieksekusi dalam translasi sederhana, tetapi biasanya bentuk dari kode objek yang dapat dieksekusi ini merupakan bentuk internal dari final program eksekusi, yang kemudian dimanipulasi oleh tahap optimisasi dari translator sebelum akhirnya kode eksekusi benar-benar dihasilkan. Dalam tahap proses semantik, setiap statement akan diperiksa token dan ekspresi dari batasan-batasan yang ditetapkan. Batasan-batasan tersebut misalnya : 
+</br>∼ panjang maksimum token identifier adalah 8 karakter, 
+</br>∼ panjang maksimum ekspresi tunggal adalah 80 karakter, 
+</br>∼ nilai bilangan bulat adalah -32768 s/d 32767, 
+</br>∼ operasi aritmatika harus melibatkan operand-operand yang bertipe sama. </p>
+				</div><!-- col-md-6 -->
+			</div><!-- row -->
+		</div><!-- container -->
+		
+		<section class="section-divider textdivider divider3">
+			<div class="container">
+				<h1>LIFE</h1>
+				<hr>
+				<p>Nothing is impossible. Anything can happen as long as we believe.</p>
+			</div><!-- container -->
+		</section><!-- section -->
+		
+		
+		
+		
+		<!-- ==== PORTFOLIO ==== -->
+		<div id="greywrap">
+			<div class="container" id="simulation" name="simulation">
+			<br>
+				<div class="row">
+					<br>
+					<h1 class="centered">SIMULATION</h1>
+					<hr>
+					<br>
+					<br>
+				</div><!-- /row -->
+				<div class="container">
+				<div class="row">	
+				
+					<!-- PORTFOLIO IMAGE 1 -->
+					<div class="col-md-6 ">
+						<div class="grid mask">
+							<figure>
+								<img class="img-responsive" src="assets/img/bg/website.png" alt="">
+								<figcaption>
+									<h5>WEBSITE</h5>
+									<a data-toggle="modal" href="assets/simulasi.zip" class="btn btn-primary btn-lg">Download</a>
+								</figcaption><!-- /figcaption -->
+							</figure><!-- /figure -->
+						</div><!-- /grid-mask -->
+					</div><!-- /col -->
 					
-				</div>
-				<label style="position:fixed;margin-left:15px;margin-top:64px;"><h4><small>Explanation</small></h4></label></br></br>
-				<label style="position:fixed;margin-left:15px;margin-top:64px;" class="txtNote"></label>
-				
-				
-				<div class="tree" id="syntax" style="margin: 0px auto;margin-top:30px;">
-				</div>
-				
-			</div>
-		</div>
-		<div class="container" id="iSemantic" style="display:none;background:white;">
-			<div class="row" style="margin-top:70px;margin-bottom:70px;" >
-				<div class="navbar-collapse col-md-12" style="position:fixed;margin-top:8px;width:87%;">
-					<ul class="nav" style="float:left;">
-						<li><p>Semantic is included in the analysis process. In the analysis 3 processes occur. They are lexical analysis, syntactic analysis and semantic analysis. 
-In the lexical analysis the characters that make up the source program is read from left to right and grouped in what is called a token (scanning). Then after scanning, character or token obtained on a lexical analysis are compiled and classified in a particular hierarchy as a whole has a certain meaning. After all that processes, final structure that has been obtained will be checked and examined its suitability with existing program components, known as semantic analysis.</p>
-						<li><label><h2><small>Semantic Analyzer</small></h2></label></li>
-						<li><label class="statementtext"></label><!--index--></li>
-						<li><label><h4><small>Explanation</small></h4></label></li>
-						<li><label class="txtNote"></label></li>
-					</ul>
 					
-				</div>
+					<!-- PORTFOLIO IMAGE 6 -->
+					<div class="col-md-6">
+						<div class="grid mask">
+							<figure>
+								<img class="img-responsive" src="assets/img/bg/mobile.png" alt="">
+								<figcaption>
+									<h5>ANDROID APPS</h5>
+									<a data-toggle="modal" href="assets/SemanticAnalyzer-debug.apk" class="btn btn-primary btn-lg">Download</a>
+								</figcaption><!-- /figcaption -->
+							</figure><!-- /figure -->
+						</div><!-- /grid-mask -->
+					</div><!-- /col -->
+				</div><!-- /row -->
+				<br>
+				<br>
+				</div><!-- /row -->
+			</div><!-- /container -->
+		</div>
+
+		<!-- ==== SECTION DIVIDER4 ==== -->
+		
+		<!-- ==== TEAM MEMBERS ==== -->
+		<div class="container" id="team" name="team">
+		<br>
+			<div class="row white centered">
+				<h1 class="centered">OUR TEAM</h1>
+				<hr>
+				<br>
+				<br>
+				<div class="col-md-3 centered">
+					<img class="img img-circle" src="assets/img/team/joeerik.jpg" height="120px" width="120px" alt="">
+					<br>
+					<h4><b>Joe Erik Carla Wijaya</b></h4>
+					<h5><b>1501146086</b></h5>
+				</div><!-- col-md-3 -->
 				
-				<div class="tree" id="semantic" style="margin: 0px auto;margin-top:200px;">
-				</div>
+				<div class="col-md-3 centered">
+					<img class="img img-circle" src="assets/img/team/treavis.jpg" height="120px" width="120px" alt="">
+					<br>
+					<h4><b>Treavies Agassy</b></h4>
+					<h5><b>1501166876</b></h5>
+				</div><!-- col-md-3 -->
+				
+				<div class="col-md-3 centered">
+					<img class="img img-circle" src="assets/img/team/vito.jpg" height="120px" width="120px" alt="">
+					<br>
+					<h4><b>Vitorio Ignatius</b></h4>
+					<h5><b>1501166762</b></h5>
+				</div><!-- col-md-3 -->
+				
+				
+				<div class="col-md-3 centered">
+					<img class="img img-circle" src="assets/img/team/cinthya.jpg" height="120px" width="120px" alt="">
+					<br>
+					<h4><b>Cinthya Dwi Lindy</b></h4>
+					<h5><b>1501177091</b></h5>
+				</div><!-- col-md-3 -->
+				
+				<div class="col-md-3 centered">
+					<img class="img img-circle" src="assets/img/team/jeffrey.jpg" height="120px" width="120px" alt="">
+					<br>
+					<h4><b>Jeffrey Johan</b></h4>
+					<h5><b>1501163174</b></h5>
+				</div><!-- col-md-3 -->
+				
+				<div class="col-md-3 centered">
+					<img class="img img-circle" src="assets/img/team/derry.jpg" height="120px" width="120px" alt="">
+					<br>
+					<h4><b>Derry</b></h4>
+					<h5><b>1501145202</b></h5>
+				</div><!-- col-md-3 -->
+				
+				<div class="col-md-3 centered">
+					<img class="img img-circle" src="assets/img/team/arief.jpg" height="120px" width="120px" alt="">
+					<br>
+					<h4><b>Arief Rufaidy</b></h4>
+					<h5><b>1501190295</b></h5>
+				</div><!-- col-md-3 -->
+				
+				<div class="col-md-3 centered">
+					<img class="img img-circle" src="assets/img/team/ronaldi.jpg" height="120px" width="120px" alt="">
+					<br>
+					<h4><b>Ronaldi</b></h4>
+					<h5><b>1501187571</b></h5>
+				</div><!-- col-md-3 -->
+			</div><!-- row -->
+		</div><!-- container -->
+
+		<!-- ==== GREYWRAP ==== -->
+
+		<div id="footerwrap">
+			<div class="container">
+				<h4>Created by Semantic Analyzer Team - Copyright 2014</h4>
 			</div>
 		</div>
-		<div class="container" id="iCredit" style="display:none;">
-			<div class="row" style="text-align:center;margin:0px auto;margin-top:70px;" >
-				<label><h2><small>Created by :</small></h2></label>
-				<p>1. Joe Erik Carla Wijaya - 1501146086<br/>
-				2. Treavies Agassy - 1501166876<br/>
-				3. Vitorio Ignatius - 1501166762<br/>
-				4. Cinthya Dwi Lindy - 1501177091 <br/>
-				5. Jeffrey Johan - 1501163174<br/>
-				6. Derry - 1501145202<br/>
-				7. Arief Rufaidy - 1501190295<br/>
-				8. Ronaldi - 1501187571</p>
-			</div>
-		</div>
-	</body>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+		
+
+	<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="assets/js/retina.js"></script>
+	<script type="text/javascript" src="assets/js/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="assets/js/smoothscroll.js"></script>
+	<script type="text/javascript" src="assets/js/jquery-func.js"></script>
+  </body>
 </html>
